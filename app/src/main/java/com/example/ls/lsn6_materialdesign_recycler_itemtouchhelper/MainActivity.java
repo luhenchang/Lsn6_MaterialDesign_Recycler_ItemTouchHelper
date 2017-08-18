@@ -28,21 +28,19 @@ public class MainActivity extends AppCompatActivity implements StartDragListener
         initView();
         initData();
         setData();
-
-
-
     }
 
     private void setData() {
-        mAdapter=new QQAdapter(mData,this,this);
         mRecylerView.setAdapter(mAdapter);
         mRecylerView.setLayoutManager(new LinearLayoutManager(this));
-        itemTouchHelper=new ItemTouchHelper(new ItemTouchHelperCallBack());
+        itemTouchHelper=new ItemTouchHelper(new ItemTouchHelperCallBack(mAdapter));
         itemTouchHelper.attachToRecyclerView(mRecylerView);
     }
 
     private void initData() {
+        mAdapter=new QQAdapter(mData,this);
         mData.addAll(DataUtils.init());
+        mAdapter.notifyDataSetChanged();
 
     }
 

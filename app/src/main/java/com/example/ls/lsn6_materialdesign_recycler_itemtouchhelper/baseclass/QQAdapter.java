@@ -15,17 +15,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ls.lsn6_materialdesign_recycler_itemtouchhelper.R;
+import com.example.ls.lsn6_materialdesign_recycler_itemtouchhelper.moveItemLisener.OnMoveItemLisenner;
 
-public class QQAdapter extends Adapter<QQAdapter.MyViewHolder>{
+public class QQAdapter extends Adapter<QQAdapter.MyViewHolder> implements OnMoveItemLisenner{
 	private List<QQMessage> list;
     private Context context;
 	private StartDragListener startDragListener;
-	public QQAdapter(List<QQMessage> list,Context context,StartDragListener startDragListener) {
+	public QQAdapter(List<QQMessage> list,StartDragListener startDragListener) {
 		this.list = list;
+		this.context= (Context) startDragListener;
 		this.startDragListener=startDragListener;
-		this.context=context;
 	}
-	
+
+	@Override
+	public boolean onMoveItemLisenner(int fromStartposition, int toEndposition) {
+		Collections.swap(list,fromStartposition,toEndposition);
+		notifyItemMoved(fromStartposition,toEndposition);
+		return true;
+	}
+
 	class MyViewHolder extends ViewHolder{
 
 		private ImageView iv_logo;
